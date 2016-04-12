@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeInput.Test", "FakeInput.Test\FakeInput.Test.csproj", "{CD6DDA53-1090-4D79-B13D-6AD4F5185128}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FakeInput", "FakeInput\FakeInput.csproj", "{5AA22364-4CA3-4E74-93D8-9570F591F186}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CD6DDA53-1090-4D79-B13D-6AD4F5185128}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD6DDA53-1090-4D79-B13D-6AD4F5185128}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD6DDA53-1090-4D79-B13D-6AD4F5185128}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD6DDA53-1090-4D79-B13D-6AD4F5185128}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5AA22364-4CA3-4E74-93D8-9570F591F186}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5AA22364-4CA3-4E74-93D8-9570F591F186}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5AA22364-4CA3-4E74-93D8-9570F591F186}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5AA22364-4CA3-4E74-93D8-9570F591F186}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
