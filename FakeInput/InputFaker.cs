@@ -14,12 +14,15 @@ namespace FakeInput
 		public const int WM_KEYDOWN = 0x0100;
 		private const int WM_SETTEXT = 0x000c;
 
-		internal static readonly IntPtr HWnd;
+		internal static IntPtr HWnd
+		{ get; private set; }
 
 		static InputFaker()
 		{
 			HWnd = System.Diagnostics.Process.GetCurrentProcess().MainWindowHandle;
 		}
+
+		#region helpers
 
 		private static KeyCode? _getTypableSymbolCode(char c)
 		{
@@ -125,6 +128,8 @@ namespace FakeInput
 			return _getSymbolInput(c);
 		}
 
+		#endregion helpers
+
 		public static void SendCodeByPost(int code)
 		{
 			bool result = NativeMethods.PostMessage(HWnd, WM_KEYDOWN, code, 0x00);
@@ -140,22 +145,20 @@ namespace FakeInput
 			SendCodeByPost((int)key);
 		}
 
-		public static bool SendChars(params char[] text)
+		public static void SendChars(params char[] text)
 		{
-			return SendCharsSpooky(0, text);
+			SendCharsSpooky(0, text);
 		}
-		public static bool SendCharsSpooky(int msDelay, params char[] text)
+		public static void SendCharsSpooky(int msDelay, params char[] text)
 		{
 			CharacterInput[] codes = new CharacterInput[text.Length];
 			for (int i = 0; i < text.Length; i++)
 			{
 				CharacterInput n = _getInputSet(text[i]);
-				if (n == null)
-				{
-					return false; // unsendable character
+				if (n != null)  // Only typable characters are sent.
+				{				// Others are ignored.
+					codes[i] = n;
 				}
-
-				codes[i] = n;
 			}
 
 			foreach (CharacterInput ci in codes)
@@ -163,24 +166,36 @@ namespace FakeInput
 				Thread.Sleep(msDelay);
 				SendInput(ci);
 			}
-			return true;
 		}
 
-		public static bool SendString(string s, int spookyDelay = 0)
+		public static void SendString(string s, int spookyDelay = 0)
 		{
 			if (spookyDelay == 0)
 			{
-				return SendChars(s.ToArray());
+				SendChars(s.ToArray());
 			}
 			else
 			{
-				return SendCharsSpooky(spookyDelay, s.ToArray());
+				SendCharsSpooky(spookyDelay, s.ToArray());
 			}
+		}
+
+		public static Thread SendStringOnThread(string s, int spookyDelay = 0)
+		{
+			Thread res = new Thread(() => SendString(s, spookyDelay));
+			res.Start();
+			return res;
 		}
 
 		public static void SendEnter()
 		{
 			SendKeyByPost(KeyCode.ENTER);
+		}
+
+		public static void ClearWithCtrlABS()
+		{
+			SendInput(new CharacterInput(KeyCode.KEY_A, KeyCode.LCONTROL));
+			SendInput(new CharacterInput(KeyCode.BACKSPACE));
 		}
 
 		public static void SendInput(CharacterInput input)
